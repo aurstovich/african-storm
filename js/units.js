@@ -236,7 +236,7 @@ export class Отряд {
 
     двигатьсяКЦели(кадровПрошло) {
         let точка = null;
-        let это Атака = false;
+        let этоАтака = false;
 
         if (this.цельАтаки && this.цельАтаки.жив) {
             const поз = this.позиция;
