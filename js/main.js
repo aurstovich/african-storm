@@ -13,7 +13,7 @@ import {
 } from './garrison.js';
 import {
     обновитьЭкономику, купитьПодкрепление, подключитьЭкономику, получитьОчки,
-    получитьСостояниеСпавна
+    получитьСостояниеСпавна, очки
 } from './economy.js';
 import { обновитьИнтерфейс, учестьПотери, подключитьИнтерфейс, показатьКонец, потери } from './ui.js';
 import {
@@ -129,9 +129,6 @@ function инициализироватьИгру() {
     играОкончена = false;
 }
 
-// Импорт очков из economy для инициализации
-import { очки } from './economy.js';
-
 инициализироватьУправление();
 инициализироватьТач();
 
@@ -156,6 +153,7 @@ function обновитьВидимостьHUD() {
     $('shop').style.display = показывать ? '' : 'none';
     $('controls-hint').style.display = показывать ? '' : 'none';
     $('pause-btn').style.display = показывать ? '' : 'none';
+    $('hud-toggle-open').style.display = 'none'; // при смене экрана возвращаем в исходное
 }
 
 function обновитьКнопкуПродолжить() {
@@ -309,6 +307,25 @@ window.addEventListener('keydown', (е) => {
         else if (состояние === 'paused') продолжитьИгру();
     }
 });
+
+// ================================================================
+// СВОРАЧИВАНИЕ HUD
+// ================================================================
+const hud = document.getElementById('hud');
+const btnClose = document.getElementById('hud-toggle-close');
+const btnOpen = document.getElementById('hud-toggle-open');
+
+if (btnClose && btnOpen && hud) {
+    btnClose.addEventListener('click', () => {
+        hud.classList.add('hidden-panel');
+        btnOpen.style.display = 'flex';
+    });
+
+    btnOpen.addEventListener('click', () => {
+        hud.classList.remove('hidden-panel');
+        btnOpen.style.display = 'none';
+    });
+}
 
 // ================================================================
 // ИГРОВОЙ ЦИКЛ
