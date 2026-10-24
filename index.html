@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Африканский шторм</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div id="vignette"></div>
+
+    <!-- ==================== HUD ==================== -->
+    <div id="hud">
+        <div class="hud-block">
+            <div id="game-title">
+                АФРИКАНСКИЙ ШТОРМ
+                <small>ГОРОД ГУРУН · ГОРОДСКОЙ ТЕАТР ВОЕННЫХ ДЕЙСТВИЙ</small>
+            </div>
+        </div>
+        <div class="hud-block">
+            <div class="title">
+                <span>ОБСТАНОВКА</span>
+                <span class="icon">📊</span>
+            </div>
+            <div class="hud-row">
+                <span class="label">🏢 Гурундия</span>
+                <span class="value gurun" id="val-gurun">0</span>
+            </div>
+            <div class="hud-row">
+                <span class="label">🏢 Бурундия</span>
+                <span class="value burun" id="val-burun">0</span>
+            </div>
+            <div class="hud-row">
+                <span class="label">🏢 Нейтральных</span>
+                <span class="value" id="val-neutral">0</span>
+            </div>
+            <div class="bar-wrap">
+                <div class="bar-gurun" id="bar-gurun" style="width:0%"></div>
+                <div class="bar-burun" id="bar-burun" style="width:0%"></div>
+                <div class="bar-neutral" id="bar-neutral" style="width:100%"></div>
+            </div>
+            <div style="height:8px"></div>
+            <div class="hud-row">
+                <span class="label">💀 Потери Гурундии</span>
+                <span class="value gurun" id="loss-gurun">0</span>
+            </div>
+            <div class="hud-row">
+                <span class="label">💀 Потери Бурундии</span>
+                <span class="value burun" id="loss-burun">0</span>
+            </div>
+        </div>
+        <div class="hud-block" id="info-block">
+            <div class="title">
+                <span>ВЫДЕЛЕНИЕ</span>
+                <span class="icon">🎯</span>
+            </div>
+            <div id="selection-content">
+                <div id="info-empty">Ничего не выбрано</div>
+            </div>
+        </div>
+        <div class="hud-block">
+            <div class="title">
+                <span>РЕСУРСЫ</span>
+                <span class="icon">⭐</span>
+            </div>
+            <div class="hud-row">
+                <span class="label">Очки</span>
+                <span class="value gold"><span id="points">0</span> ⭐</span>
+            </div>
+            <div class="hud-row">
+                <span class="label">Доход</span>
+                <span class="value" id="income">+0 / 3с</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="shop" class="hud-block">
+        <div class="title">
+            <span>ПОДКРЕПЛЕНИЯ</span>
+            <span class="icon">🪖</span>
+        </div>
+        <button class="shop-btn" id="btn-infantry" disabled>
+            <span class="btn-name">🪖 Пехота (7)</span>
+            <span class="cost">2 ⭐</span>
+        </button>
+        <button class="shop-btn" id="btn-sniper" disabled>
+            <span class="btn-name">🎯 Снайперы (4)</span>
+            <span class="cost">3 ⭐</span>
+        </button>
+        <div class="shop-subtitle">
+            Спавн у здания с гарнизоном.<br>
+            +1 ⭐ / 3 сек за каждое занятое здание
+        </div>
+    </div>
+
+    <div id="controls-hint">
+    <b>ЛКМ</b> — выделить | <b>ПКМ</b> — идти / атаковать / войти<br>
+    <b>1</b> — купить пехоту | <b>2</b> — купить снайперов<br>
+    <b>A</b> — атаковать / идти к курсору | <b>E</b> — стоп | <b>Q</b> — снять выделение<br>
+    <b>F1–F5</b> — группы | <b>Ctrl+F1–F5</b> — назначить<br>
+    <b>Пробел</b> — центрировать на выделенных | <b>H</b> — домой<br>
+    <b>WASD</b> — камера | <b>Колесо</b> — зум | <b>Esc</b> — пауза | <b>F5</b> — сохранить
+</div>
+
+    <button id="pause-btn" title="Пауза (Esc)">⏸</button>
+
+    <canvas id="game"></canvas>
+
+    <!-- ==================== ГЛАВНОЕ МЕНЮ ==================== -->
+    <div id="main-menu" class="overlay">
+        <div class="menu-box">
+            <h1 class="game-logo">АФРИКАНСКИЙ ШТОРМ</h1>
+            <div class="menu-subtitle">ГОРОД ГУРУН · 2024</div>
+            <div class="menu-buttons">
+                <button class="menu-btn primary" id="btn-start">НАЧАТЬ ИГРУ</button>
+                <button class="menu-btn" id="btn-continue" style="display:none">ПРОДОЛЖИТЬ</button>
+                <button class="menu-btn" id="btn-settings-main">НАСТРОЙКИ</button>
+                <button class="menu-btn" id="btn-quit">ВЫХОД</button>
+            </div>
+            <div class="menu-footer">Гурундия vs Бурундия · уничтожь противника</div>
+            <div class="menu-footer" id="save-info" style="display:none"></div>
+        </div>
+    </div>
+
+    <!-- ==================== НАСТРОЙКИ ==================== -->
+    <div id="settings-menu" class="overlay hidden">
+        <div class="menu-box">
+            <h2 class="menu-header">НАСТРОЙКИ</h2>
+            <div class="settings-row">
+                <label for="volume">Громкость</label>
+                <input type="range" id="volume" min="0" max="100" value="70">
+                <span id="volume-value">70%</span>
+            </div>
+            <div class="menu-buttons">
+                <button class="menu-btn primary" id="btn-settings-back">НАЗАД</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ПАУЗА ==================== -->
+    <div id="pause-menu" class="overlay hidden">
+        <div class="menu-box">
+            <h2 class="menu-header">ПАУЗА</h2>
+            <div class="menu-buttons">
+                <button class="menu-btn primary" id="btn-resume">ПРОДОЛЖИТЬ</button>
+                <button class="menu-btn" id="btn-save">СОХРАНИТЬ ИГРУ</button>
+                <button class="menu-btn" id="btn-settings-pause">НАСТРОЙКИ</button>
+                <button class="menu-btn danger" id="btn-to-menu">ВЫЙТИ В ГЛАВНОЕ МЕНЮ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== КОНЕЦ ИГРЫ ==================== -->
+    <div id="end-screen" class="overlay hidden">
+        <div class="menu-box">
+            <h1 class="end-title" id="end-title">ПОБЕДА</h1>
+            <div class="end-subtitle" id="end-subtitle">Противник уничтожен</div>
+            <div class="menu-buttons">
+                <button class="menu-btn primary" id="btn-end-restart">ИГРАТЬ СНОВА</button>
+                <button class="menu-btn" id="btn-end-menu">В ГЛАВНОЕ МЕНЮ</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
