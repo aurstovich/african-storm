@@ -70,12 +70,11 @@ export function инициализироватьУправление() {
 
     холст.addEventListener('mouseup', (е) => {
         if (е.button === 0) {
-            // === ПРОВЕРКА КЛИКА ПО МИНИКАРТЕ ===
             if (window.__обработатьКликПоМиниКарте) {
                 const попалВМиниКарту = window.__обработатьКликПоМиниКарте(е.clientX, е.clientY);
                 if (попалВМиниКарту) {
                     тащитсяВыделение = false;
-                    return; // Выходим, так как это был клик по карте
+                    return;
                 }
             }
         }
@@ -179,10 +178,19 @@ export function инициализироватьУправление() {
 
         if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
 
-        if (клавиша === '1' || клавиша === '2') {
-            if (_купитьПодкрепление) {
-                _купитьПодкрепление(клавиша === '1' ? 'infantry' : 'sniper');
-            }
+        // === ГОРЯЧИЕ КЛАВИШИ ДЛЯ ПОКУПКИ ===
+        if (клавиша === '1') {
+            if (_купитьПодкрепление) _купитьПодкрепление('infantry');
+            е.preventDefault();
+            return;
+        }
+        if (клавиша === '2') {
+            if (_купитьПодкрепление) _купитьПодкрепление('sniper');
+            е.preventDefault();
+            return;
+        }
+        if (клавиша === '3') {
+            if (_купитьПодкрепление) _купитьПодкрепление('tank');
             е.preventDefault();
             return;
         }
@@ -472,7 +480,6 @@ export function инициализироватьТач() {
         отменитьДолгоеНажатие();
 
         if (касания.size === 0) {
-            // Проверка тапа по миникарте
             if (е.changedTouches[0] && window.__обработатьКликПоМиниКарте) {
                 if (window.__обработатьКликПоМиниКарте(е.changedTouches[0].clientX, е.changedTouches[0].clientY)) {
                     тапНачало = null;
