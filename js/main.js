@@ -51,7 +51,6 @@ window.__эффектПриказа = (x, y) => {
     добавитьВзрыв(x, y, '#9fdf5f', 20);
 };
 
-// Клик по миникарте
 window.__обработатьКликПоМиниКарте = (x, y) => {
     return обработатьКликПоМиниКарте(x, y);
 };
@@ -387,9 +386,9 @@ function обновитьИгру(сейчас) {
 
 function циклОтрисовки() {
     if (играИнициализирована) {
-        нарисовать(); // Обычная отрисовка мира
+        нарисовать();
         if (состояние === 'playing' || состояние === 'paused') {
-            нарисоватьМиниКарту(document.getElementById('game').getContext('2d')); // Мини-карта поверх
+            нарисоватьМиниКарту(document.getElementById('game').getContext('2d'));
         }
     } else {
         const ctx = document.getElementById('game').getContext('2d');
