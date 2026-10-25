@@ -7,8 +7,8 @@
     <meta name="mobile-web-app-capable" content="yes">
     <title>Африканский шторм</title>
     <link rel="icon" href="data:,">
-  <script type="module" crossorigin src="./assets/index-B7_P0aTq.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-CLRAmXm_.css">
+  <script type="module" crossorigin src="./assets/index-Y8KHHiSf.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CdheO3-5.css">
 </head>
 <body>
 
@@ -51,6 +51,24 @@
                     <div class="bar-burun" id="bar-burun" style="width:0%"></div>
                     <div class="bar-neutral" id="bar-neutral" style="width:100%"></div>
                 </div>
+
+                <!-- Мораль -->
+                <div style="height:8px"></div>
+                <div class="hud-row">
+                    <span class="label">🛡 Мораль Гурундии</span>
+                    <span class="value" id="morale-gurun-text">100%</span>
+                </div>
+                <div class="bar-wrap" style="height:6px;">
+                    <div id="morale-gurun-bar" style="height:100%; background:#4caf50; width:100%; border-radius:3px;"></div>
+                </div>
+                <div class="hud-row">
+                    <span class="label">🛡 Мораль Бурундии</span>
+                    <span class="value" id="morale-burun-text">100%</span>
+                </div>
+                <div class="bar-wrap" style="height:6px;">
+                    <div id="morale-burun-bar" style="height:100%; background:#4caf50; width:100%; border-radius:3px;"></div>
+                </div>
+
                 <div style="height:8px"></div>
                 <div class="hud-row">
                     <span class="label">💀 Потери Гурундии</span>
@@ -139,6 +157,10 @@
     <div id="settings-menu" class="overlay hidden">
         <div class="menu-box">
             <h2 class="menu-header">НАСТРОЙКИ</h2>
+                <div class="settings-row" style="margin-top: 10px;">
+                <label style="width: auto; flex: 1;">Режим песочницы</label>
+                <input type="checkbox" id="sandbox-toggle" style="width: 20px; height: 20px; cursor: pointer;">
+            </div>
             
             <div class="settings-row">
                 <label for="volume">Громкость</label>
@@ -151,6 +173,15 @@
                 <input type="checkbox" id="fog-toggle" checked style="width: 20px; height: 20px; cursor: pointer;">
             </div>
 
+            <div class="settings-row" style="margin-top: 10px;">
+                <label for="difficulty">Сложность</label>
+                <select id="difficulty" style="flex: 1; padding: 8px; background: #2a3a2a; color: #d0d8c8; border: 1px solid #556b2f; border-radius: 4px; font-family: inherit; cursor: pointer;">
+                    <option value="легкий">ЛЕГКИЙ</option>
+                    <option value="нормальный" selected>НОРМАЛЬНЫЙ</option>
+                    <option value="сложный">СЛОЖНЫЙ</option>
+                </select>
+            </div>
+
             <div class="menu-buttons">
                 <button class="menu-btn primary" id="btn-settings-back">НАЗАД</button>
             </div>
@@ -160,9 +191,42 @@
     <div id="pause-menu" class="overlay hidden">
         <div class="menu-box">
             <h2 class="menu-header">ПАУЗА</h2>
+
+            <div class="save-slots">
+                <div class="save-slot" data-слот="1">
+                    <span class="slot-name">Слот 1</span>
+                    <span class="slot-info" id="slot-info-1">—</span>
+                    <button class="slot-btn save" data-слот="1">💾 Сохранить</button>
+                    <button class="slot-btn load" data-слот="1" disabled>📂 Загрузить</button>
+                </div>
+                <div class="save-slot" data-слот="2">
+                    <span class="slot-name">Слот 2</span>
+                    <span class="slot-info" id="slot-info-2">—</span>
+                    <button class="slot-btn save" data-слот="2">💾 Сохранить</button>
+                    <button class="slot-btn load" data-слот="2" disabled>📂 Загрузить</button>
+                </div>
+                <div class="save-slot" data-слот="3">
+                    <span class="slot-name">Слот 3</span>
+                    <span class="slot-info" id="slot-info-3">—</span>
+                    <button class="slot-btn save" data-слот="3">💾 Сохранить</button>
+                    <button class="slot-btn load" data-слот="3" disabled>📂 Загрузить</button>
+                </div>
+                <div class="save-slot" data-слот="4">
+                    <span class="slot-name">Слот 4</span>
+                    <span class="slot-info" id="slot-info-4">—</span>
+                    <button class="slot-btn save" data-слот="4">💾 Сохранить</button>
+                    <button class="slot-btn load" data-слот="4" disabled>📂 Загрузить</button>
+                </div>
+            </div>
+
+            <div class="save-slot auto" data-слот="auto">
+                <span class="slot-name">Автосохранение</span>
+                <span class="slot-info" id="slot-info-auto">—</span>
+                <button class="slot-btn load" data-слот="auto" disabled>📂 Загрузить</button>
+            </div>
+
             <div class="menu-buttons">
                 <button class="menu-btn primary" id="btn-resume">ПРОДОЛЖИТЬ</button>
-                <button class="menu-btn" id="btn-save">СОХРАНИТЬ ИГРУ</button>
                 <button class="menu-btn" id="btn-settings-pause">НАСТРОЙКИ</button>
                 <button class="menu-btn danger" id="btn-to-menu">ВЫЙТИ В ГЛАВНОЕ МЕНЮ</button>
             </div>
