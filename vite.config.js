@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-    base: '/african-storm/', // Имя твоего репозитория на GitHub
+    base: './', // <--- ВАЖНО: точка и слэш!
     build: {
         outDir: 'dist',
         emptyOutDir: true
