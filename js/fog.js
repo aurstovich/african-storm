@@ -8,9 +8,20 @@ export const КОЛ_ТУМАНА = Math.ceil(НАСТРОЙКИ.РАЗМЕР_М�
 export const РЯД_ТУМАНА = Math.ceil(НАСТРОЙКИ.РАЗМЕР_МИРА / НАСТРОЙКИ.КЛЕТКА_ТУМАНА);
 export const сеткаТумана = new Uint8Array(КОЛ_ТУМАНА * РЯД_ТУМАНА);
 
+export let туманВключен = true;
+
+export function установитьТуман(включен) {
+    туманВключен = включен;
+    if (!туманВключен) {
+        сеткаТумана.fill(2);
+    }
+}
+
 export function индексТумана(кол, ряд) { return ряд * КОЛ_ТУМАНА + кол; }
 
 export function открытьКруг(worldX, worldY, радиус) {
+    if (!туманВключен) return;
+
     const кол0 = Math.max(0, Math.floor((worldX - радиус) / НАСТРОЙКИ.КЛЕТКА_ТУМАНА));
     const кол1 = Math.min(КОЛ_ТУМАНА - 1, Math.floor((worldX + радиус) / НАСТРОЙКИ.КЛЕТКА_ТУМАНА));
     const ряд0 = Math.max(0, Math.floor((worldY - радиус) / НАСТРОЙКИ.КЛЕТКА_ТУМАНА));
@@ -27,6 +38,8 @@ export function открытьКруг(worldX, worldY, радиус) {
 }
 
 export function обновитьТуман(юниты) {
+    if (!туманВключен) return;
+
     for (let i = 0; i < сеткаТумана.length; i++) {
         if (сеткаТумана[i] === 2) сеткаТумана[i] = 1;
     }
@@ -39,6 +52,8 @@ export function обновитьТуман(юниты) {
 }
 
 export function виднаТочка(wx, wy) {
+    if (!туманВключен) return true;
+
     const кол = Math.floor(wx / НАСТРОЙКИ.КЛЕТКА_ТУМАНА);
     const ряд = Math.floor(wy / НАСТРОЙКИ.КЛЕТКА_ТУМАНА);
     if (кол < 0 || кол >= КОЛ_ТУМАНА || ряд < 0 || ряд >= РЯД_ТУМАНА) return false;
@@ -46,6 +61,8 @@ export function виднаТочка(wx, wy) {
 }
 
 export function разведанаТочка(wx, wy) {
+    if (!туманВключен) return true;
+
     const кол = Math.floor(wx / НАСТРОЙКИ.КЛЕТКА_ТУМАНА);
     const ряд = Math.floor(wy / НАСТРОЙКИ.КЛЕТКА_ТУМАНА);
     if (кол < 0 || кол >= КОЛ_ТУМАНА || ряд < 0 || ряд >= РЯД_ТУМАНА) return false;

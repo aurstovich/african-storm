@@ -13,18 +13,13 @@
 
     <div id="vignette"></div>
 
-    <!-- Кнопка "развернуть HUD" (появляется, когда панель свернута) -->
     <button id="hud-toggle-open" title="Развернуть панель" style="display:none;">◀</button>
 
-    <!-- ==================== ПРАВАЯ ПАНЕЛЬ (HUD + МАГАЗИН) ==================== -->
     <div id="right-panel">
-        
-        <!-- Кнопка "свернуть HUD" -->
         <div class="hud-toggle-row">
             <button id="hud-toggle-close" title="Свернуть панель">▶</button>
         </div>
 
-        <!-- Основной HUD -->
         <div id="hud">
             <div class="hud-block">
                 <div id="game-title">
@@ -92,7 +87,6 @@
             </div>
         </div>
 
-        <!-- Магазин (прижат к низу панели) -->
         <div id="shop" class="hud-block">
             <div class="title">
                 <span>ПОДКРЕПЛЕНИЯ</span>
@@ -107,10 +101,8 @@
                 <span class="cost">3 ⭐</span>
             </button>
         </div>
-
     </div>
 
-    <!-- Подсказки по управлению -->
     <div id="controls-hint">
         <b>ЛКМ</b> — выделить | <b>ПКМ</b> — идти / атаковать / войти<br>
         <b>1</b> — купить пехоту | <b>2</b> — купить снайперов<br>
@@ -124,7 +116,6 @@
 
     <canvas id="game"></canvas>
 
-    <!-- ==================== ГЛАВНОЕ МЕНЮ ==================== -->
     <div id="main-menu" class="overlay">
         <div class="menu-box">
             <h1 class="game-logo">АФРИКАНСКИЙ ШТОРМ</h1>
@@ -140,22 +131,27 @@
         </div>
     </div>
 
-    <!-- ==================== НАСТРОЙКИ ==================== -->
     <div id="settings-menu" class="overlay hidden">
         <div class="menu-box">
             <h2 class="menu-header">НАСТРОЙКИ</h2>
+            
             <div class="settings-row">
                 <label for="volume">Громкость</label>
                 <input type="range" id="volume" min="0" max="100" value="70">
                 <span id="volume-value">70%</span>
             </div>
+
+            <div class="settings-row" style="margin-top: 10px;">
+                <label style="width: auto; flex: 1;">Туман войны</label>
+                <input type="checkbox" id="fog-toggle" checked style="width: 20px; height: 20px; cursor: pointer;">
+            </div>
+
             <div class="menu-buttons">
                 <button class="menu-btn primary" id="btn-settings-back">НАЗАД</button>
             </div>
         </div>
     </div>
 
-    <!-- ==================== ПАУЗА ==================== -->
     <div id="pause-menu" class="overlay hidden">
         <div class="menu-box">
             <h2 class="menu-header">ПАУЗА</h2>
@@ -168,7 +164,6 @@
         </div>
     </div>
 
-    <!-- ==================== КОНЕЦ ИГРЫ ==================== -->
     <div id="end-screen" class="overlay hidden">
         <div class="menu-box">
             <h1 class="end-title" id="end-title">ПОБЕДА</h1>
