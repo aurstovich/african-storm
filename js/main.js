@@ -26,6 +26,7 @@ import {
     естьСохранение, сохранитьИгру, загрузитьИгру,
     удалитьСохранение, времяСохранения
 } from './save.js';
+import { нарисоватьМиниКарту, обработатьКликПоМиниКарте, подключитьМиниКарту } from './minimap.js';
 
 // ================================================================
 // СОСТОЯНИЕ
@@ -50,6 +51,11 @@ window.__эффектПриказа = (x, y) => {
     добавитьВзрыв(x, y, '#9fdf5f', 20);
 };
 
+// Клик по миникарте
+window.__обработатьКликПоМиниКарте = (x, y) => {
+    return обработатьКликПоМиниКарте(x, y);
+};
+
 // ================================================================
 // ПОДКЛЮЧЕНИЕ МОДУЛЕЙ
 // ================================================================
@@ -63,6 +69,7 @@ window.__эффектПриказа = (x, y) => {
 подключитьГарнизон(юниты, обновитьИнтерфейс);
 подключитьЭкономику(юниты, обновитьИнтерфейс, создатьОтряд);
 подключитьИнтерфейс(юниты, получитьОчки, получитьСостояниеСпавна);
+подключитьМиниКарту(юниты);
 
 function быстроеСохранение() {
     if (играИнициализирована && !играОкончена) {
@@ -149,11 +156,10 @@ function показатьЭкран(id) {
 
 function обновитьВидимостьHUD() {
     const показывать = состояние === 'playing' || состояние === 'paused';
-    $('hud').style.display = показывать ? '' : 'none';
-    $('shop').style.display = показывать ? '' : 'none';
+    $('right-panel').style.display = показывать ? '' : 'none';
     $('controls-hint').style.display = показывать ? '' : 'none';
     $('pause-btn').style.display = показывать ? '' : 'none';
-    $('hud-toggle-open').style.display = 'none'; // при смене экрана возвращаем в исходное
+    $('hud-toggle-open').style.display = 'none';
 }
 
 function обновитьКнопкуПродолжить() {
@@ -311,18 +317,18 @@ window.addEventListener('keydown', (е) => {
 // ================================================================
 // СВОРАЧИВАНИЕ HUD
 // ================================================================
-const hud = document.getElementById('hud');
+const panel = document.getElementById('right-panel');
 const btnClose = document.getElementById('hud-toggle-close');
 const btnOpen = document.getElementById('hud-toggle-open');
 
-if (btnClose && btnOpen && hud) {
+if (btnClose && btnOpen && panel) {
     btnClose.addEventListener('click', () => {
-        hud.classList.add('hidden-panel');
+        panel.classList.add('hidden-panel');
         btnOpen.style.display = 'flex';
     });
 
     btnOpen.addEventListener('click', () => {
-        hud.classList.remove('hidden-panel');
+        panel.classList.remove('hidden-panel');
         btnOpen.style.display = 'none';
     });
 }
@@ -381,7 +387,10 @@ function обновитьИгру(сейчас) {
 
 function циклОтрисовки() {
     if (играИнициализирована) {
-        нарисовать();
+        нарисовать(); // Обычная отрисовка мира
+        if (состояние === 'playing' || состояние === 'paused') {
+            нарисоватьМиниКарту(document.getElementById('game').getContext('2d')); // Мини-карта поверх
+        }
     } else {
         const ctx = document.getElementById('game').getContext('2d');
         ctx.fillStyle = '#0e0e0e';
