@@ -41,14 +41,18 @@ export function обновитьИнтерфейс() {
             const цвет = ю.команда === 'gurun' ? '#4a90d9' : '#d94a4a';
             const гранаты = ю.тип === 'infantry' && ю.гранаты > 0
                 ? `, <span class="grenades">💣 ${ю.гранаты}</span>` : '';
+            
+            // Для танка показываем проценты
+            const описание = ю.техника 
+                ? `${Math.ceil(ю.здоровье * 100)}%` 
+                : `${здоровых} готовых${раненых > 0 ? `, <span class="wounded">${раненых} ранен.</span>` : ''}${гранаты}`;
+
             html += `
                 <div class="unit-card" style="border-left-color:${цвет}">
                     <div class="badge" style="background:${цвет}">${ю.метка[0]}</div>
                     <div class="info">
                         <div class="name">${ю.метка} ${ю.вГарнизоне ? '(на крыше)' : ''}</div>
-                        <div class="stats">
-                            ${здоровых} готовых${раненых > 0 ? `, <span class="wounded">${раненых} ранен.</span>` : ''}${гранаты}
-                        </div>
+                        <div class="stats">${описание}</div>
                     </div>
                 </div>
             `;
@@ -83,6 +87,7 @@ export function обновитьИнтерфейс() {
     // --- Кнопки магазина ---
     const кнПех = document.getElementById('btn-infantry');
     const кнСнп = document.getElementById('btn-sniper');
+    const кнТанк = document.getElementById('btn-tank');
 
     // Пехота
     const состПех = _получитьСостояниеСпавна ? _получитьСостояниеСпавна('gurun', 'infantry') : null;
@@ -110,6 +115,20 @@ export function обновитьИнтерфейс() {
         кнСнп.querySelector('.btn-name').innerHTML = `${конфСнп.ИКОНКА} ${конфСнп.НАЗВАНИЕ} (${конфСнп.ЗДОРОВЬЕ})`;
         кнСнп.querySelector('.cost').textContent = `${конфСнп.ЦЕНА} ⭐`;
         кнСнп.disabled = очки < конфСнп.ЦЕНА;
+    }
+
+    // Танк
+    const состТанк = _получитьСостояниеСпавна ? _получитьСостояниеСпавна('gurun', 'tank') : null;
+    const конфТанк = НАСТРОЙКИ.ЮНИТЫ['tank'];
+    if (состТанк && состТанк.осталось > 0) {
+        const сек = Math.ceil(состТанк.осталось / 60);
+        кнТанк.disabled = true;
+        кнТанк.querySelector('.btn-name').innerHTML = `⏳ ${конфТанк.НАЗВАНИЕ}`;
+        кнТанк.querySelector('.cost').textContent = `${сек}с`;
+    } else {
+        кнТанк.querySelector('.btn-name').innerHTML = `${конфТанк.ИКОНКА} ${конфТанк.НАЗВАНИЕ}`;
+        кнТанк.querySelector('.cost').textContent = `${конфТанк.ЦЕНА} ⭐`;
+        кнТанк.disabled = очки < конфТанк.ЦЕНА;
     }
 }
 
