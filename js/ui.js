@@ -84,28 +84,32 @@ export function обновитьИнтерфейс() {
     const кнПех = document.getElementById('btn-infantry');
     const кнСнп = document.getElementById('btn-sniper');
 
+    // Пехота
     const состПех = _получитьСостояниеСпавна ? _получитьСостояниеСпавна('gurun', 'infantry') : null;
+    const конфПех = НАСТРОЙКИ.ЮНИТЫ['infantry'];
     if (состПех && состПех.осталось > 0) {
         const сек = Math.ceil(состПех.осталось / 60);
         кнПех.disabled = true;
-        кнПех.querySelector('.btn-name').innerHTML = '⏳ Пехота';
+        кнПех.querySelector('.btn-name').innerHTML = `⏳ ${конфПех.НАЗВАНИЕ}`;
         кнПех.querySelector('.cost').textContent = `${сек}с`;
     } else {
-        кнПех.querySelector('.btn-name').innerHTML = '🪖 Пехота (7)';
-        кнПех.querySelector('.cost').textContent = '2 ⭐';
-        кнПех.disabled = очки < НАСТРОЙКИ.ЦЕНА_ПЕХОТЫ;
+        кнПех.querySelector('.btn-name').innerHTML = `${конфПех.ИКОНКА} ${конфПех.НАЗВАНИЕ} (${конфПех.ЗДОРОВЬЕ})`;
+        кнПех.querySelector('.cost').textContent = `${конфПех.ЦЕНА} ⭐`;
+        кнПех.disabled = очки < конфПех.ЦЕНА;
     }
 
+    // Снайперы
     const состСнп = _получитьСостояниеСпавна ? _получитьСостояниеСпавна('gurun', 'sniper') : null;
+    const конфСнп = НАСТРОЙКИ.ЮНИТЫ['sniper'];
     if (состСнп && состСнп.осталось > 0) {
         const сек = Math.ceil(состСнп.осталось / 60);
         кнСнп.disabled = true;
-        кнСнп.querySelector('.btn-name').innerHTML = '⏳ Снайперы';
+        кнСнп.querySelector('.btn-name').innerHTML = `⏳ ${конфСнп.НАЗВАНИЕ}`;
         кнСнп.querySelector('.cost').textContent = `${сек}с`;
     } else {
-        кнСнп.querySelector('.btn-name').innerHTML = '🎯 Снайперы (4)';
-        кнСнп.querySelector('.cost').textContent = '3 ⭐';
-        кнСнп.disabled = очки < НАСТРОЙКИ.ЦЕНА_СНАЙПЕРОВ;
+        кнСнп.querySelector('.btn-name').innerHTML = `${конфСнп.ИКОНКА} ${конфСнп.НАЗВАНИЕ} (${конфСнп.ЗДОРОВЬЕ})`;
+        кнСнп.querySelector('.cost').textContent = `${конфСнп.ЦЕНА} ⭐`;
+        кнСнп.disabled = очки < конфСнп.ЦЕНА;
     }
 }
 
