@@ -7,7 +7,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <title>Африканский шторм</title>
     <link rel="icon" href="data:,">
-  <script type="module" crossorigin src="./assets/index-Y8KHHiSf.js"></script>
+  <script type="module" crossorigin src="./assets/index-CTQc50mg.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/index-CdheO3-5.css">
 </head>
 <body>
@@ -52,7 +52,6 @@
                     <div class="bar-neutral" id="bar-neutral" style="width:100%"></div>
                 </div>
 
-                <!-- Мораль -->
                 <div style="height:8px"></div>
                 <div class="hud-row">
                     <span class="label">🛡 Мораль Гурундии</span>
@@ -119,6 +118,10 @@
                 <span class="btn-name">🎯 Снайперы (4)</span>
                 <span class="cost">3 ⭐</span>
             </button>
+            <button class="shop-btn" id="btn-rpg" disabled>
+                <span class="btn-name">💥 РПГ-расчёт (2)</span>
+                <span class="cost">4 ⭐</span>
+            </button>
             <button class="shop-btn" id="btn-tank" disabled>
                 <span class="btn-name">🚀 Танк Т-62</span>
                 <span class="cost">6 ⭐</span>
@@ -128,7 +131,7 @@
 
     <div id="controls-hint">
         <b>ЛКМ</b> — выделить | <b>ПКМ</b> — идти / атаковать / войти<br>
-        <b>1</b> — купить пехоту | <b>2</b> — купить снайперов | <b>3</b> — купить танк<br>
+        <b>1</b> — купить пехоту | <b>2</b> — купить снайперов | <b>3</b> — купить танк | <b>4</b> — купить РПГ<br>
         <b>A</b> — атаковать / идти к курсору | <b>E</b> — стоп | <b>Q</b> — снять выделение<br>
         <b>F1–F5</b> — группы | <b>Ctrl+F1–F5</b> — назначить<br>
         <b>Пробел</b> — центрировать на выделенных | <b>H</b> — домой<br>
@@ -136,8 +139,6 @@
     </div>
 
     <button id="pause-btn" title="Пауза (Esc)">⏸</button>
-
-    <canvas id="game"></canvas>
 
     <div id="main-menu" class="overlay">
         <div class="menu-box">
